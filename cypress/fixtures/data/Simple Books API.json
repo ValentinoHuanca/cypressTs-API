@@ -1,0 +1,8 @@
+{
+    "url":"https://simple-books-api.glitch.me/",
+    "endpoints":{
+        "bookList":"books",
+        "submitOrder":"orders",
+        "apiAut":"api-clients"
+    }
+}
