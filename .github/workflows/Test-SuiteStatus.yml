@@ -34,7 +34,7 @@ jobs:
               with:
                   browser: ${{ matrix.browser }}
                   command:
-                    bun run test:integer:${{ matrix.browser }} **/*/Status.api.cy.ts
+                    bun run test:integer:${{ matrix.browser }} **/*/status.api.cy.ts
 
             - name: Generate Junit/Mocha report for ${{ matrix.browser }}
               if: always()

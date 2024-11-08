@@ -6,7 +6,7 @@ module.exports = defineConfig({
   experimentalInteractiveRunEvents:true,
   screenshotOnRunFailure:false,
   reporterOptions:{
-    configFile:'config-report-chrome.json'
+    configFile:'config-report-electron.json'
   },
   e2e: {
     specPattern: [ 'cypress/e2e/**/*.api.cy.{js,jsx,ts,tsx}' ],
