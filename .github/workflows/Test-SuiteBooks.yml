@@ -1,6 +1,8 @@
 name: Cypress Testing Books
 run-name: ${{github.actor}} run TestSuite in ${{github.ref_name}}
-on: [workflow_dispatch]
+on: 
+  push:
+    branches-ignore: [main,QA]
 jobs:
     TestRun:
         runs-on: ubuntu-latest
