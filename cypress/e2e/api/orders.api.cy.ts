@@ -1,13 +1,14 @@
 import { url,endpoints } from "@date/Simple Books API.json";
 import { randomNumInt } from "@helper/functions";
-import { faker } from "@faker-js/faker";
+import { faker, ur } from "@faker-js/faker";
 
 describe('TS|US3|Orders',()=>{
-    var token:string="97ef12da8ba5b2f99e8af405e67eac113d39172275557a3fc58fb044eabbd64a"
+    var token:string //"97ef12da8ba5b2f99e8af405e67eac113d39172275557a3fc58fb044eabbd64a"
     let bookId1:number=randomNumInt(1,6)
     let nameCustomer:string=faker.internet.username({firstName:'Johnathan'})
     var orderIdCreate:string
-    it.skip('API Authentication', () => {
+    var orderIdGet:string
+    it('API Authentication', () => {
         cy.api({
             method:'POST',
             url:url+endpoints.apiAut,
@@ -41,6 +42,49 @@ describe('TS|US3|Orders',()=>{
             expect(body.orderId).to.be.an('string')
             const orderId:string=body.orderId
             orderIdCreate = orderId
+        })
+    });
+    it('Get all orders', () => {
+        cy.api({
+            method:'GET',
+            url:url+endpoints.submitOrder,
+            headers:{
+                authorization:token
+            }
+        }).then(response=>{
+            const body=response.body
+            const rang=body.length
+            //console.log(rang)
+            const nunAle:number=randomNumInt(0,rang)
+            const idOrder:string=response.body[nunAle].id
+            orderIdGet = idOrder
+            expect(response.status).to.eql(200)
+            expect(response).to.be.an('object')
+        })
+    });
+    it('Update an order', () => {
+        cy.api({
+            method:'PATCH',
+            url:url+endpoints.submitOrder+`/${orderIdGet}`,
+            headers:{
+                authorization:token
+            },
+            body:{
+                customerName:faker.internet.username({firstName:'Joe'})
+            }
+        }).then(response=>{
+            expect(response.status).to.eql(204)
+        })
+    });
+    it('Delete an order', () => {
+        cy.api({
+            method:'DELETE',
+            url:url+endpoints.submitOrder+`/${orderIdGet}`,
+            headers:{
+                authorization:token
+            }
+        }).then(response=>{
+            expect(response.status).to.eql(204)
         })
     });
 })
